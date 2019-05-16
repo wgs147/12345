@@ -167,7 +167,6 @@
                 this.$router.go(-1);
               }
               this.getCode();
-              // this.timeOut();
               res.result._questions.forEach(item => {
                 if(item.type=='single'){
                   item.sanswer = '';

@@ -14,5 +14,7 @@ var QuestionSchema = new Schema({
   ]},
   score: Number, // 分值
   answer: String // 答案
+},{
+  usePushEach: true
 });
 module.exports = mongoose.model('Question', QuestionSchema);

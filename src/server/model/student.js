@@ -17,5 +17,7 @@ var StudentSchema = new Schema({
         answer: String
       }]
     }]
+},{
+  usePushEach: true
 })
 module.exports = mongoose.model('Student', StudentSchema);

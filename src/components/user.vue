@@ -5,18 +5,6 @@
           <span>{{userData.userName}}</span>
       </span>
     <el-dropdown-menu slot="dropdown" class="user-dropdown">
-      <!-- <el-dropdown-item>
-        <a  @click="prive">
-          个人资料
-          <i class="fa fa-id-card-o fa-fw"></i>
-        </a>
-      </el-dropdown-item>
-      <el-dropdown-item>
-        <a>
-          修改密码
-          <i class="fa fa-key fa-fw"></i>
-        </a>
-      </el-dropdown-item> -->
       <el-dropdown-item>
         <a @click="loginOut">
           退出

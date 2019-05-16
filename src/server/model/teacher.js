@@ -5,5 +5,7 @@ var TeacherSchema = new Schema({
   userName: String, // 用户名
   passWord: String, // 密码
   _papers:[{ type: Schema.Types.ObjectId, ref: 'Paper' }]
+},{
+  usePushEach: true
 })
 module.exports = mongoose.model('Teacher', TeacherSchema);

@@ -6,27 +6,6 @@ let mdHash = function(data){
   const hash = crypto.createHash('md5');
   return hash.update(data).digest('hex');
 }
-
-// var mongoose = require('mongoose');
-// var Schema = mongoose.Schema;
-
-// var student = new Student({
-//     userId: 12001, // 学号
-//     userName: '张三', // 用户名
-//     passWord: '123321', // 密码
-//     grade: 3, // 年级 1~6 分别代表一年级到六年级
-//     class: 3, // 班级
-//     exams:[{ // 参加的考试
-//       _paper:Schema.Types.ObjectId("5a40a4ef485a584d44764ff1"),
-//       score:100,
-//       date: new Date(),
-//       answers: []
-//     }]
-// })
-
-// exports.init = student.save((err,doc) => {
-//   console.log(err);
-// });
 //注册
 exports.register = function (req,res) {
     let userInfo = req.body.userInfo;
@@ -75,12 +54,7 @@ exports.signup = function(req, res) {
     userName: req.body.userName,
     passWord: mdHash(req.body.userPwd)
   }
-  // console.log(param.passWord);
-  // console.log(param);
   Student.findOne(param, (err,doc)=>{
-    // console.log(err) When the findOne query doesn't find at least one matching document,
-    //the second parameter of the callback (in this case user) is set to null.
-    //It's not an error, so err is also null.
     if (err) {
       res.json({
         status:'1',
@@ -181,11 +155,10 @@ exports.updateStudent = function (req, res) {
 exports.getExamLogs = function (req, res){
   let userName =req.session.userName;
   let name = req.param('name');
-    // 通过req.param()取到的值都是字符串，而limit()需要一个数字作为参数
   let  pageSize = parseInt(req.param('pageSize'));
   let  pageNumber = parseInt(req.param('pageNumber'));
   let  skip = (pageNumber-1)*pageSize; // 跳过几条
-  let  reg = new RegExp(name,'i'); // 在nodejs中，必须要使用RegExp，来构建正则表达式对象。
+  let  reg = new RegExp(name,'i'); //正则表达式对象。
   Student.findOne({"userName":userName},{"exams":{$slice:[skip,pageSize]}}).populate({path:'exams._paper',match:{name: reg}})
     .exec((err,doc) => {
       if (err) {
@@ -214,11 +187,11 @@ exports.getExamLogs = function (req, res){
 exports.getExams = function (req,res) {
   let userName =req.session.userName;
   let name = req.param('name');
-    // 通过req.param()取到的值都是字符串，而limit()需要一个数字作为参数
+  // let teaName = req.param('teaName');
   let  pageSize = parseInt(req.param('pageSize'));
   let  pageNumber = parseInt(req.param('pageNumber'));
-  let skip = (pageNumber-1)*pageSize; // 跳过几条
-  let reg = new RegExp(name,'i'); // 在nodejs中，必须要使用RegExp，来构建正则表达式对象。
+  let skip = (pageNumber-1)*pageSize; 
+  let reg = new RegExp(name,'i'); 
   Student.findOne({"userName":userName},(err,doc)=>{
     if(err) {
       res.json({

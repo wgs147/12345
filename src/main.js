@@ -1,9 +1,6 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-// import store from './store'
 import ElementUI from 'element-ui' // 加载ElementUI
 import VueLazyLoad from 'vue-lazyload'
 import 'element-ui/lib/theme-default/index.css'
@@ -18,7 +15,6 @@ Vue.prototype.$mySessionStorage = commonFun.mySessionStorage;
 //全局封装一个获取用户信息方法
 var getUserData=function () {
   var sessionData = commonFun.mySessionStorage.get('currentUser', 'json')||{};
-  //console.log(sessionData)
   return {
     userName: sessionData.userName,
     userId: sessionData.userId,
@@ -59,7 +55,6 @@ router.beforeEach((to, from, next) => {
   var userdata = getUserData();
   if (to.path != '/managelogin'&&to.name!='404'&&to.path != '/'&&to.path != "/frontregister"&&to.path!='/manageregister') {  // 判断是否登录
     if(!userdata.userName){
-      // ElementUI.$message.danger('请登陆!');
       ElementUI.Message.error('抱歉，您还没有登录！');
       if(to.path.indexOf('front')>0){
         router.push({path:'/'});
@@ -81,32 +76,25 @@ router.beforeEach((to, from, next) => {
  * @return {[type]}       [description]
  */
 Array.prototype.equals = function (array) {
-  // if the other array is a falsy value, return
   if (!array)
     return false;
-  // compare lengths - can save a lot of time 
   if (this.length != array.length)
     return false;
   for (var i = 0, l = this.length; i < l; i++) {
-    // Check if we have nested arrays
     if (this[i] instanceof Array && array[i] instanceof Array) {
-      // recurse into the nested arrays
       if (!this[i].equals(array[i]))
         return false;    
     }      
     else if (!(array.indexOf(this[i])>=0)) { 
-      // Warning - two different object instances will never be equal: {x:20} != {x:20}
       return false;  
     }      
   }    
   return true;
 }
 
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router, // 使用路由
-  // store, // 使用vuex
   template: '<App/>',
   components: { App }
 })

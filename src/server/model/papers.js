@@ -8,6 +8,8 @@ var PapersSchema = new Schema({
     examnum: Number, // 考试人数
     _teacher: { type: Schema.Types.ObjectId, ref: 'Teacher'}, // 老师
     _questions: [{ type: Schema.Types.ObjectId, ref: 'Question' }] // 题
+},{
+    usePushEach: true
 })
 module.exports = mongoose.model('Paper', PapersSchema);
 
